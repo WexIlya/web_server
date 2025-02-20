@@ -27,7 +27,6 @@ func main() {
 		log.Fatal(err)
 	}
 	defer db.Close()
-
 	if err := db.PingContext(ctx); err != nil {
 		log.Fatal(err)
 	}

@@ -62,7 +62,7 @@ func FindAllPack(db *sql.DB) string {
 
 func InsertMember(db *sql.DB) {
 	//добавление строки в таблицу
-	sm := storage.InitMember(2, "Ivan", 60, 800, 1, 80)
+	sm := storage.InitMember(1, "Oleg", 50, 100, 2, 10)
 	result, err := db.Exec("INSERT INTO squad (id, name, power, healthpoint, id_starter_pack, manapoint) VALUES ($1, $2, $3, $4, $5, $6)",
 		sm.Id,
 		sm.Name,
@@ -80,7 +80,7 @@ func InsertMember(db *sql.DB) {
 
 func InsertPack(db *sql.DB) {
 	//добавление строки в таблицу
-	sp := storage.InitPack(3, "Explosion", "Fetil", "Pool", "1231")
+	sp := storage.InitPack(3, "", "", "", "")
 	result, err := db.Exec("INSERT INTO starter_packs (id, ability, item, tool, weapon) VALUES ($1, $2, $3, $4, $5)",
 		sp.Id,
 		sp.Ability,
