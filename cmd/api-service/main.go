@@ -1,45 +1,28 @@
 package main
 
 import (
-	"context"
-	"database/sql"
 	"fmt"
-	"log"
 	"net/http"
-	storage "services/internal"
+	connect "services/internal"
+	"services/internal/handlers/handlerMembers"
+	handlerPack "services/internal/handlers/handlerPacks"
+	storageM "services/internal/storage/funcTables/funcMember"
+	storageP "services/internal/storage/funcTables/funcPack"
 
 	_ "github.com/lib/pq"
 )
 
-const (
-	host     = "localhost"
-	port     = 5432
-	user     = "root"
-	password = "123"
-	dbname   = "users"
-)
-
 func main() {
-	dbpath := fmt.Sprintf("host=%s port=%d user=%s password=%s dbname=%s sslmode=disable", host, port, user, password, dbname)
-	ctx := context.Background()
-	db, err := sql.Open("postgres", dbpath)
-	if err != nil {
-		log.Fatal(err)
-	}
-	defer db.Close()
-	if err := db.PingContext(ctx); err != nil {
-		log.Fatal(err)
-	}
+	connect.ConnectDB()
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-		fmt.Fprintf(w, "Successfully connected!\n")
-		fmt.Fprintf(w, "DB: squad, starter packs\n")
-		fmt.Fprintf(w, storage.FindAllMembers(db))
-		fmt.Fprintf(w, storage.FindAllPack(db))
+		fmt.Fprintf(w, "DB: squad\n")
+		fmt.Fprintf(w, storageM.FindAllMembers())
+		fmt.Fprintf(w, "\n")
+		fmt.Fprintf(w, "DB: starter packs\n")
+		fmt.Fprintf(w, storageP.FindAllPack())
+		fmt.Fprintf(w, "\n")
 	})
+	http.HandleFunc("/squad", handlerMembers.MembersHandler)
+	http.HandleFunc("/starterPacks", handlerPack.PacksHandler)
 	http.ListenAndServe(":8082", nil)
-	//storage.InsertPack(db)
-	//storage.InsertMember(db)
-	//storage.FindAllPack(db)
-	//storage.DeleteMemberByID(db, 1)
-	//storage.DeletePackByID(db, 3)
 }
