@@ -1,5 +1,5 @@
 # web_server
-Очень простой веб-сервер на Golang, который выводит строки из двух таблиц базы данных PostgreSQL.
+Очень простой веб-сервер на Golang, который выполняет различные операции с помощью http запросов(Postman) с таблицами базы данных PostgreSQL.
 Для его создания использовал Visual Studio Code, pgAdmin 4, а так же пакеты: 
 "context"
 "database/sql"
@@ -7,3 +7,4 @@
 "log"
 "net/http"
 "github.com/lib/pq"
+Проверку работы запросов делал в Postman
