@@ -8,11 +8,11 @@ import (
 )
 
 const (
-	host     = "localhost"
-	port     = 5432
-	user     = "root"
-	password = "123"
-	dbname   = "users"
+	host     = "*"
+	port     = *
+	user     = "*"
+	password = "*"
+	dbname   = "*"
 )
 
 var Connectdb *sql.DB
